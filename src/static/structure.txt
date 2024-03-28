@@ -1,0 +1,23 @@
+views 1
+    Login.vue
+    Register.vue
+    Products.vue
+
+layouts 2
+    AppLayout.vue
+    DialogLayout.vue
+    InfoLayout.vue
+
+modules 3
+    Auth
+        RegisterForm.vue
+        LoginForm.vue
+    Products
+    Providers
+    Orders
+
+common 4
+    Button.vue
+    Input.vue
+    Datepicker.vue
+    Dropdown.vue

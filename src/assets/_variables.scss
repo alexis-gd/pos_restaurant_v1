@@ -1,0 +1,47 @@
+/* General */
+$border-radius:10px;
+$surface-card:#ffffff;
+$card-border:1px solid #e2e8f0;
+$font-color-default: #252525;
+$font-color-placeholder: #ccc;
+
+
+$background-color: #ffffff; // Color del backgorund de los contenedores principales
+// $details-general-color: #22C789; // Color de elementos generales como bullets, indicadores de tabs, etc
+// $advise-success-color: rgba(41, 255, 173, 0.2); // Color de banda de mensaje de proceso exitoso
+// $advise-success-icon-color: #22C789; // Color de banda de mensaje de proceso exitoso
+// $advise-success-font-color: #606060; // Color de banda de mensaje de proceso exitoso
+$advise-warning-color: #FFCE3133; // Color de banda de mensaje de proceso no exitoso
+$advise-warning-icon-color: #FFCE31; // Color de banda de mensaje de proceso exitoso
+// $advise-warning-font-color: #606060; // Color de banda de mensaje de proceso exitoso
+
+// Botones
+$button-primary-color: #00A88F; // Color background de botones principales
+// $button-primary-font-color: #FFFFFF; // Color de fuente en botón primary
+$button-primary-color-hover: #008E79; // Color background de botones principales
+$button-secondary-color: #EDEDED; // Color background de botones secundarios
+// $buttton-secondary-color-hover: #F6F6F6; // Color background de botones secundarios con hover
+// $button-outline-color: #606060; // Color de borde en botones outline (en caso de haber botones outline)
+// $buttton-outline-color-hover: #F6F6F6; // Color background de botones secundarios con hover
+// $button-secondary-font-color: #333333; // Color de fuente en botón secondary
+// $button-check-radio-enable-color: #004951; // Color de checkbox o radio buttons habilitados
+// $button-check-radio-disable-color: #004951; // Color de checkbox o radio buttons deshabilitados
+// $button-check-radio-disable-border-color: #004951; // Color de borde de checkbox o radio buttons deshabilitados
+// $buttton-disabled-color: #CECECE; // Color background de botones deshabilitados
+
+// Fuentes
+// $font-color-primary: #333333; // Color principal de fuente
+$font-color-secondary: #767676; // Color secundario de fuente
+// $link-font-color-base: #004951; // Color de fuente en links
+// $link-font-hover-color: #22C789; // Color de fuente cuando el cursor esta apuntando a un enlace
+// $font-color-disable: #CECECE; // Color para fuente en elementos deshabilitados como botones o formularios
+
+// Inputs
+// $default-form-field-color: #606060; // Color por defecto de borde en campo de formulario
+$success-form-field-color: #10b981; // Color de borde por exito de validación en campo de formulario
+$error-form-field-color: #FF3B30; // Color de borde por error de validacion y mensaje de error en campo de formulario
+// $focus-form-field-color: #22C789; // Color de borde por evento focus en campo de formulario
+// $font-color-placeholder: #CECECE; // Color para fuente para placeholder de inputs
+// $font-color-default: #333333; // Color para fuente en campos de formulario con validacion exitosa
+// $font-color-success: #004951; // Color para fuente en campos de formulario con validacion exitosa
+// $font-color-error: #FF3B30; // Color para fuente en campos de formulario con error en validacion
