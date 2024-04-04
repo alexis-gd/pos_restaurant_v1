@@ -21,7 +21,7 @@
             </template>
             <template #end>
                 <button v-ripple
-                    class="position-relative overflow-hidden w-full p-link flex align-items-center p-2 text-color hover:surface-200 border-noround">
+                    class="position-relative overflow-hidden w-full p-link flex align-items-center p-2 text-color hover:surface-200 border-noround border">
                     <Avatar image="/src/assets/images/avatar-default.svg" class="me-2" shape="circle" />
                     <span class="d-inline-flex flex-column">
                         <span class="fw-bold text-capitalize">{{ userStore.name }}</span>
@@ -31,7 +31,7 @@
             </template>
         </Menubar>
     </div>
-    <FloatBar></FloatBar>
+    <!-- <FloatMenu></FloatMenu> -->
 </template>
 
 <script>
@@ -40,7 +40,7 @@ import { useUserStore } from "@/stores/userStore";
 import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import Menubar from 'primevue/menubar';
-import FloatBar from './FloatBar.vue';
+// // import FloatMenu from './FloatMenu.vue';
 
 export default {
     name: 'MenuBar',
@@ -48,7 +48,7 @@ export default {
         Menubar,
         Badge,
         Avatar,
-        FloatBar
+        // FloatMenu
     },
     setup() {
         const items = ref([

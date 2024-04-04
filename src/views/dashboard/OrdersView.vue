@@ -1,20 +1,21 @@
 <template>
-    <div class="home-view-container">
+    <div class="profile-view-container">
         <DashboardLayout>
-            <DashboardProfile></DashboardProfile>
+            <h1>Orders</h1>
         </DashboardLayout>
+        <FloatMenu :option="'orders'"></FloatMenu>
     </div>
 </template>
 
 <script>
+import FloatMenu from '@/modules/FloatMenu.vue';
 import DashboardLayout from '@/layouts/DashboardLayout.vue';
-import DashboardProfile from '@/modules/DashboardProfile.vue';
 
 export default {
-    name: 'HomeView',
+    name: 'OrderView',
     components: {
-        DashboardLayout,
-        DashboardProfile
+        FloatMenu,
+        DashboardLayout
     },
     setup() {
         return {
@@ -27,7 +28,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles.scss';
 
-.home-view-container {
+.profile-view-container {
     padding: 20px;
     min-height: 100vh;
 }

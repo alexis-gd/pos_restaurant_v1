@@ -6,17 +6,27 @@ export const useUserStore = defineStore("UserStore", {
             id_user: '',
             name: '',
             username: '',
-            level: ''
+            level: '',
+            isAuthenticated: '',
         }
     },
 
     actions: {
         fill() {
             const userData = JSON.parse(localStorage.getItem('customerData'));
-            this.id_user = userData.id_user;
-            this.name = userData.name;
-            this.username = userData.id_user;
-            this.level = userData.level;
+            if (userData) {
+                this.id_user = userData.id_user;
+                this.name = userData.name;
+                this.username = userData.username;
+                this.level = userData.level;
+                this.isAuthenticated = true;
+            } else {
+                this.id_user = '';
+                this.name = '';
+                this.username = '';
+                this.level = '';
+                this.isAuthenticated = false;
+            }
         }
     }
 

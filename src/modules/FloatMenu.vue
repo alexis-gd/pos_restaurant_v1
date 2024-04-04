@@ -2,25 +2,29 @@
     <div class="float-bar-container">
         <div class="nav-container">
             <nav class="nav nav-pills shadow-sm">
-                <button class="btn btn-primary active">
-                    <OrderIcon :class="`active`" />
+                <button :class="`btn btn-primary ${option === 'orders' ? 'active' : ''}`" @click="goToPage('orders')">
+                    <OrderIcon :class="`${option === 'orders' ? 'active' : ''}`" />
                     <span class="fb-span">Ordenes</span>
                 </button>
-                <button class="btn btn-primary">
-                    <TableIcon :class="``" />
+                <button :class="`btn btn-primary ${option === 'tables' ? 'active' : ''}`" @click="goToPage('tables')">
+                    <TableIcon :class="`${option === 'tables' ? 'active' : ''}`" />
                     <span class="fb-span">Mesas</span>
                 </button>
-                <button class="btn btn-primary">
-                    <ProductIcon :class="``" />
+                <button :class="`btn btn-primary ${option === 'products' ? 'active' : ''}`"
+                    @click="goToPage('products')">
+                    <ProductIcon :class="`${option === 'products' ? 'active' : ''}`" />
                     <span class="fb-span">Productos</span>
                 </button>
-                <button class="btn btn-primary">
-                    <ProfileIcon :class="``" />
+                <button :class="`btn btn-primary ${option === 'profile' ? 'active' : ''}`" @click="goToPage('profile')">
+                    <ProfileIcon :class="`${option === 'profile' ? 'active' : ''}`" />
                     <span class="fb-span">Perfil</span>
                 </button>
             </nav>
         </div>
     </div>
+    <!-- <OverlayPanel ref="op" :showCloseIcon="true">
+        <ProfilePanel></ProfilePanel>
+    </OverlayPanel> -->
 </template>
 
 <script>
@@ -28,10 +32,22 @@ import OrderIcon from '../components/icons/IconOrder.vue'
 import TableIcon from '../components/icons/IconTable.vue'
 import ProductIcon from '../components/icons/IconProduct.vue'
 import ProfileIcon from '../components/icons/IconProfile.vue'
+// import ProfilePanel from '@/modules/ProfilePanel.vue'
+// import OverlayPanel from 'primevue/overlaypanel';
 
 export default {
-    name: 'NavBar',
-    components: { OrderIcon, TableIcon, ProductIcon, ProfileIcon },
+    name: 'FloatMenu',
+    props: {
+        option: String,
+    },
+    components: {
+        OrderIcon,
+        TableIcon,
+        ProductIcon,
+        ProfileIcon,
+        // ProfilePanel,
+        // OverlayPanel
+    },
     setup() {
         return {}
     },
@@ -39,6 +55,15 @@ export default {
         return {}
     },
     mounted() { },
+    methods: {
+        goToPage(page) {
+            this.$router.push('/dashboard/' + page);
+        },
+        toggle(event) {
+            // used for click profile panel
+            this.$refs.op.toggle(event);
+        }
+    }
 };
 </script>
 

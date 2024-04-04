@@ -16,6 +16,7 @@ export default {
         return {
             fillStyle: fillClass,
         }
-    }
+    },
+    mounted() { }
 }
 </script>

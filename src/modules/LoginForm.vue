@@ -143,7 +143,7 @@ export default {
 
                     if (action === 'CONTINUE') {
                         localStorage.setItem('customerData', JSON.stringify(data.customer));
-                        this.$router.push('/dashboard/home');
+                        this.$router.push('/dashboard/orders');
                     }
                 })
                 .catch((error) => {

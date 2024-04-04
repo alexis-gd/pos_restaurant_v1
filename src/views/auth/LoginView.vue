@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="login-view-container">
         <DialogLayout>
             <LoginForm></LoginForm>
         </DialogLayout>
@@ -13,7 +13,7 @@ import LoginForm from '@/modules/LoginForm.vue';
 </script>
 
 <style lang="scss" scoped>
-.body {
+.login-view-container {
     display: flex;
     justify-content: center;
     align-items: center;
