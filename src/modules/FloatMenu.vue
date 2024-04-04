@@ -22,9 +22,6 @@
             </nav>
         </div>
     </div>
-    <!-- <OverlayPanel ref="op" :showCloseIcon="true">
-        <ProfilePanel></ProfilePanel>
-    </OverlayPanel> -->
 </template>
 
 <script>
@@ -32,8 +29,6 @@ import OrderIcon from '../components/icons/IconOrder.vue'
 import TableIcon from '../components/icons/IconTable.vue'
 import ProductIcon from '../components/icons/IconProduct.vue'
 import ProfileIcon from '../components/icons/IconProfile.vue'
-// import ProfilePanel from '@/modules/ProfilePanel.vue'
-// import OverlayPanel from 'primevue/overlaypanel';
 
 export default {
     name: 'FloatMenu',
@@ -45,8 +40,6 @@ export default {
         TableIcon,
         ProductIcon,
         ProfileIcon,
-        // ProfilePanel,
-        // OverlayPanel
     },
     setup() {
         return {}
@@ -58,10 +51,6 @@ export default {
     methods: {
         goToPage(page) {
             this.$router.push('/dashboard/' + page);
-        },
-        toggle(event) {
-            // used for click profile panel
-            this.$refs.op.toggle(event);
         }
     }
 };
