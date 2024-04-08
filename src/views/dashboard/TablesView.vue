@@ -2,20 +2,23 @@
     <div class="profile-view-container">
         <DashboardLayout>
             <h1>Tables</h1>
+            <ProductList></ProductList>
         </DashboardLayout>
         <FloatMenu :option="'tables'"></FloatMenu>
     </div>
 </template>
 
 <script>
-import FloatMenu from '@/modules/FloatMenu.vue';
 import DashboardLayout from '@/layouts/DashboardLayout.vue';
+import FloatMenu from '@/modules/FloatMenu.vue';
+import ProductList from '@/modules/ProductList.vue';
 
 export default {
     name: 'TablesView',
     components: {
+        DashboardLayout,
         FloatMenu,
-        DashboardLayout
+        ProductList
     },
     setup() {
         return {

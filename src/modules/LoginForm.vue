@@ -107,8 +107,8 @@ export default {
     },
     data() {
         return {
-            brandLogo: 'vue-js.svg',
-            brandAlt: 'vue js logo',
+            brandLogo: 'logo.svg',
+            brandAlt: 'logo default',
             adviseMsg: '',
             adviseSuccess: '',
             btnLoading: false
@@ -143,7 +143,7 @@ export default {
 
                     if (action === 'CONTINUE') {
                         localStorage.setItem('customerData', JSON.stringify(data.customer));
-                        this.$router.push('/dashboard/orders');
+                        this.$router.push('/dashboard/tables');
                     }
                 })
                 .catch((error) => {
