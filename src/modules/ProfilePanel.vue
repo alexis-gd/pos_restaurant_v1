@@ -64,6 +64,7 @@ export default {
 @import '@/assets/styles.scss';
 
 .profile-panel-container {
+    margin-bottom: 75px;
 
     .card {
         background: $surface-card;

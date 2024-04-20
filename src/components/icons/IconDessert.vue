@@ -1,5 +1,6 @@
 <template>
-    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg :width="`${width ? width : '19'}`" :height="`${height ? height : '19'}`" viewBox="0 0 19 19" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
             d="M11.4124 5.22352C11.5881 5.62389 11.406 6.09089 11.0057 6.2666L7.33617 7.8771H13.8862L12.8173 6.40205C12.5607 6.048 12.6398 5.55302 12.9938 5.29646C13.3478 5.03991 13.8428 5.11894 14.0994 5.47299L16.0786 8.20424C16.2531 8.44515 16.2779 8.76361 16.1427 9.02862C16.0074 9.29362 15.735 9.46043 15.4375 9.46043H3.5625C3.18792 9.46043 2.8646 9.19791 2.7877 8.83131C2.71079 8.46471 2.90134 8.09438 3.24434 7.94385L10.3693 4.81676C10.7697 4.64105 11.2367 4.82316 11.4124 5.22352Z"
             fill="#00A88F" :style="`${fillStyle}`" />
@@ -26,7 +27,9 @@
 <script>
 export default {
     props: {
-        class: String
+        class: String,
+        width: String,
+        height: String,
     },
     data() {
         const fillClass = `${this.class ? 'fill: #FFFFFF' : 'fill: #00A88F'}`;

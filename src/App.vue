@@ -21,11 +21,14 @@
   <RouterView /> -->
 </template>
 
-<style>
+<style lang="scss">
+@import '@/assets/styles.scss';
+
 body {
   background-color: #EEEEEE !important;
   font-family: Poppins, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: $font-color-base !important;
 }
 </style>

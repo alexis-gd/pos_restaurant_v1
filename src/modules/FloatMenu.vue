@@ -63,12 +63,14 @@ export default {
 .float-bar-container {
 
     .nav-container {
+        width: 100%;
+        max-width: 800px;
         padding: 20px;
         position: fixed;
-        right: 0;
+        right: 50%;
         bottom: 0;
-        left: 0;
         z-index: 1030;
+        transform: translateX(50%);
     }
 
     .nav {

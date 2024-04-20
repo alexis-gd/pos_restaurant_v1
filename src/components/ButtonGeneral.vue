@@ -32,7 +32,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles.scss';
 
-
 .btn-primary {
     height: 55px;
     display: flex;
@@ -49,6 +48,13 @@ export default {
 
     &.btn-float-bar {
         width: 25%;
+        font-size: 18px;
+        gap: 10px;
+
+        @media screen and (max-width: 767px) {
+            font-size: 10px;
+            gap: 0px;
+        }
     }
 
     &.btn-categories-swiper {
@@ -59,6 +65,63 @@ export default {
         @media screen and (max-width: 767px) {
             flex-direction: row;
             justify-content: center;
+        }
+    }
+
+    &.btn-product {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        border-radius: 20px 0px 20px 0px;
+        width: 65px;
+        height: 45px;
+        gap: 0px;
+        justify-content: center;
+    }
+
+    &.btn-order-details {
+        font-size: 10px;
+        flex-direction: column;
+        gap: 0px;
+        width: 85px;
+        height: 45px;
+        border-radius: 5px;
+        padding: 0px;
+    }
+
+    &.btn-table {
+        font-size: 10px;
+        flex-direction: column;
+        gap: 0px;
+        width: 100%;
+        height: 33.3%;
+        border-radius: 0px;
+        padding: 0px;
+        background-color: $button-disabled-color;
+        color: $font-color-disable;
+        border-color: $button-disabled-color;
+
+        &:first-child {
+            border-top-right-radius: $border-radius;
+        }
+
+        &:last-child {
+            border-bottom-right-radius: $border-radius;
+        }
+    }
+
+    &.btn-modal {
+        height: 45px;
+    }
+
+    &.btn-modal-secondary {
+        background-color: $button-disabled-color;
+        color: $font-color-disable;
+        height: 45px;
+
+        &:not(.active):hover {
+            opacity: .8;
+            background-color: $button-disabled-color;
         }
     }
 

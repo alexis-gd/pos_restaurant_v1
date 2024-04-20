@@ -7,6 +7,7 @@ import router from './router'
 
 // PrimeVUE
 import PrimeVue from 'primevue/config'
+import DialogService from 'primevue/dialogservice';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import Ripple from 'primevue/ripple';
 
@@ -40,6 +41,7 @@ app.use(router);
 
 // PrimeVUE
 app.use(PrimeVue, {});
+app.use(DialogService);
 app.directive('ripple', Ripple);
 
 // i18n

@@ -2,7 +2,7 @@
     <div class="profile-view-container">
         <DashboardLayout>
             <h1>Tables</h1>
-            <ProductList></ProductList>
+            <TableList></TableList>
         </DashboardLayout>
         <FloatMenu :option="'tables'"></FloatMenu>
     </div>
@@ -11,14 +11,14 @@
 <script>
 import DashboardLayout from '@/layouts/DashboardLayout.vue';
 import FloatMenu from '@/modules/FloatMenu.vue';
-import ProductList from '@/modules/ProductList.vue';
+import TableList from '@/modules/TableList.vue';
 
 export default {
     name: 'TablesView',
     components: {
         DashboardLayout,
         FloatMenu,
-        ProductList
+        TableList
     },
     setup() {
         return {

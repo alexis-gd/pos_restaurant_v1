@@ -1,5 +1,6 @@
 <template>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg :width="`${width ? width : '24'}`" :height="`${height ? height : '24'}`" viewBox="0 0 24 24" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_39_232" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="3" y="1" width="18"
             height="22">
             <path
@@ -18,7 +19,9 @@
 <script>
 export default {
     props: {
-        class: String
+        class: String,
+        width: String,
+        height: String,
     },
     data() {
         const fillClass = `${this.class ? 'fill: #FFFFFF' : 'fill: #00A88F'}`;

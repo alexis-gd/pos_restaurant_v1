@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from '../stores/userStore'
-import LandingView from '../views/landing/LandingView.vue'
+// import LandingView from '../views/landing/LandingView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'landing',
-    component: LandingView
+    component: () => import('@/views/auth/LoginView.vue')
+    // component: LandingView
   },
   {
     path: '/auth/login',

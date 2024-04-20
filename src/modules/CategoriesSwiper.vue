@@ -1,29 +1,12 @@
 <template>
+    <p>Categorías</p>
     <swiper :modules="modules" :scrollbar="{ draggable: true }" @swiper="onSwiper" @slideChange="onSlideChange"
         :loop="false" :grabCursor="true" :breakpoints="breakpoints" class="categories-swiper">
-        <swiper-slide>
-            <ButtonGeneral :classBtn="'btn-categories-swiper active'" :label="'Comida'" :type="'href'">
-                <IconFood :class="`${active === 'Comida' ? 'active' : 'active'}`" />
-            </ButtonGeneral>
-        </swiper-slide>
-        <swiper-slide>
-            <ButtonGeneral :classBtn="'btn-categories-swiper'" :label="'Bebidas'" :type="'href'">
-                <IconDrinks :class="`${active === 'Bebidas' ? 'active' : ''}`" />
-            </ButtonGeneral>
-        </swiper-slide>
-        <swiper-slide>
-            <ButtonGeneral :classBtn="'btn-categories-swiper'" :label="'Postres'" :type="'href'">
-                <IconDessert :class="`${active === 'Postres' ? 'active' : ''}`" />
-            </ButtonGeneral>
-        </swiper-slide>
-        <swiper-slide>
-            <ButtonGeneral :classBtn="'btn-categories-swiper'" :label="'Snacks'" :type="'href'">
-                <IconSnacks :class="`${active === 'Snacks' ? 'active' : ''}`" />
-            </ButtonGeneral>
-        </swiper-slide>
-        <swiper-slide>
-            <ButtonGeneral :classBtn="'btn-categories-swiper'" :label="'Otros'" :type="'href'">
-                <IconOther :class="`${active === 'Otros' ? 'active' : ''}`" />
+        <swiper-slide v-for="category in categories" :key="category">
+            <ButtonGeneral :classBtn="`btn-categories-swiper ${category.is_active ? 'active' : ''}`"
+                :label="category.name" :type="'href'" @click="selectCategory(category.name)">
+                <img :src="`../src/assets/images/icons/${category.is_active ? category.imageActive : category.image}`"
+                    :alt="`icono ${category.name.toLowerCase()}`">
             </ButtonGeneral>
         </swiper-slide>
     </swiper>
@@ -35,12 +18,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 // Import Custom components
 import ButtonGeneral from '@/components/ButtonGeneral.vue';
-// Import Icons components
-import IconFood from '../components/icons/IconFood.vue';
-import IconDessert from '../components/icons/IconDessert.vue';
-import IconDrinks from '../components/icons/IconDrinks.vue';
-import IconSnacks from '../components/icons/IconSnacks.vue';
-import IconOther from '../components/icons/IconOther.vue';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -49,14 +26,19 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
+// Import Pinia
+import { useProductStore } from '@/stores/productStore';
+
 export default {
+    name: 'CategoriesSwiper',
+    props: {
+        categories: {
+            type: Array,
+            required: true,
+        },
+    },
     components: {
         ButtonGeneral,
-        IconFood,
-        IconDessert,
-        IconDrinks,
-        IconSnacks,
-        IconOther,
         Swiper,
         SwiperSlide
     },
@@ -67,10 +49,17 @@ export default {
         const onSlideChange = () => {
             console.debug('slide change');
         };
+        const productStore = useProductStore();
+
+        // Define la función para seleccionar una categoría
+        const selectCategory = (categoryName) => {
+            productStore.selectCategory(categoryName);
+        };
         return {
             onSwiper,
             onSlideChange,
             modules: [Navigation, Pagination, Scrollbar, A11y],
+            selectCategory
         };
     },
     data() {
@@ -101,14 +90,20 @@ export default {
                     slidesPerView: 7,
                     spaceBetween: 10,
                 },
-            }
+            },
         }
-    }
+    },
+    mounted() { },
+    methods: {}
 };
 </script>
 
 <style>
 .categories-swiper {
     padding: 0 15px 15px 0px;
+}
+
+p {
+    margin-bottom: 8px;
 }
 </style>

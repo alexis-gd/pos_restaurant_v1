@@ -1,54 +1,55 @@
 <template>
     <div class="product-list-container">
-        <p>Categorías</p>
-        <CategoriesSwiper></CategoriesSwiper>
+        <CategoriesSwiper :categories="categories"></CategoriesSwiper>
+        <div class="row">
+            <div class="col-12 col-md-7 col-lg-8 col-xl-7 box-products">
+                <template v-for="item in activeCategoryProducts" :key="item.id">
+                    <ProductListItem :item="item"></ProductListItem>
+                </template>
+            </div>
+            <div class="col-12 col-md-5 col-lg-4 col-xl-5">
+                {{ clickedTable }}
+                <OrderDetails></OrderDetails>
+            </div>
+        </div>
     </div>
-    <template v-for="item in items" :key="item.id">
-        <ProductListItem :item="item"></ProductListItem>
-    </template>
 </template>
 
 <script>
 import CategoriesSwiper from '@/modules/CategoriesSwiper.vue'
+import OrderDetails from '@/modules/OrderDetails.vue'
 import ProductListItem from '@/modules/ProductListItem.vue'
+import { useProductStore } from '@/stores/productStore'
+import { storeToRefs } from "pinia"
 
 export default {
     name: 'ProductList',
     components: {
         CategoriesSwiper,
+        OrderDetails,
         ProductListItem
     },
     setup() {
-        return {}
+        const productStore = useProductStore();
+        const { products, categories, activeCategory, getClickedTableFromLocalStorage, clickedTable } = storeToRefs(productStore);
+        productStore.fillOnce();
+        productStore.getClickedTableFromLocalStorage();
+        return {
+            productStore,
+            products,
+            categories,
+            activeCategory,
+            getClickedTableFromLocalStorage,
+            clickedTable
+        }
     },
     data() {
-        return {
-            items: [
-                {
-                    id: 1,
-                    image: 'url_de_la_imagen_1',
-                    title: 'Producto 1',
-                    description: 'Descripción del producto 1',
-                    price: 10.99,
-                    cta: 'Comprar ahora'
-                },
-                {
-                    id: 2,
-                    image: 'url_de_la_imagen_2',
-                    title: 'Producto 2',
-                    description: 'Descripción del producto 2',
-                    price: 19.99,
-                    cta: 'Agregar al carrito'
-                },
-                {
-                    id: 3,
-                    image: 'url_de_la_imagen_3',
-                    title: 'Producto 3',
-                    description: 'Descripción del producto 3',
-                    price: 15.99,
-                    cta: 'Ver detalles'
-                }
-            ]
+        return {}
+    },
+    computed: {
+        activeCategoryProducts() {
+            // Check if activeCategory exists and has products, then return them
+            return this.activeCategory?.products || [];
         }
     },
     mounted() { },
@@ -60,8 +61,14 @@ export default {
 @import '@/assets/styles.scss';
 
 .product-list-container {
-    p {
-        margin-bottom: 8px;
+    margin-bottom: 75px;
+
+    .box-products {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding-block: 30px;
     }
 }
 </style>
