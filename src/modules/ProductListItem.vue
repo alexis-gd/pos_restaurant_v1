@@ -8,7 +8,7 @@
                 <h5 class="card-product-title">{{ item.title }}</h5>
                 <p class="card-product-desc">{{ item.description }}</p>
                 <p class="card-product-price">${{ item.price }}</p>
-                <ButtonGeneral :classBtn="`btn-product active`" @click="addToCart">
+                <ButtonGeneral :classBtn="`btn-product active`" @click="addToCart()">
                     <IconPlus :class="'active'"></IconPlus>
                 </ButtonGeneral>
             </div>
@@ -19,7 +19,9 @@
 <script>
 import IconPlus from '@/components/icons/IconPlus.vue';
 import ButtonGeneral from '@/components/ButtonGeneral.vue';
-
+import { useProductStore } from '@/stores/productStore'
+import { useTableStore } from '@/stores/tableStore';
+import { storeToRefs } from "pinia"
 
 export default {
     name: 'ProductListItem',
@@ -31,7 +33,20 @@ export default {
     },
     components: { ButtonGeneral, IconPlus },
     setup() {
-        return {}
+        const tableStore = useTableStore();
+        // Functions tableStore
+        const storeAddToCart = tableStore.addToCart;
+
+        const productStore = useProductStore();
+        // Variables productStore
+        const { clickedTable, clickedCustomer } = storeToRefs(productStore);
+        return {
+            // Variables productStore
+            clickedTable,
+            clickedCustomer,
+            // Functions tableStore
+            storeAddToCart
+        }
     },
     data() {
         return {}
@@ -39,8 +54,8 @@ export default {
     mounted() { },
     methods: {
         addToCart() {
-            // Implementa la lógica para agregar el producto al carrito
-            console.log('Agregado al carrito:', this.item.id);
+            // Llama a la función addToCart del store de la mesa con los parámetros productId y tableId
+            this.storeAddToCart(this.item.id, this.clickedTable, this.clickedCustomer);
         }
     }
 };

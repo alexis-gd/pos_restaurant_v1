@@ -10,21 +10,10 @@ export const useTableStore = defineStore("TableStore", {
     },
 
     actions: {
-        initializeFromLocalStorage() {
-            const tablesData = localStorage.getItem('tablesData');
-            if (tablesData) {
-                this.tables = JSON.parse(tablesData);
-            } else {
-                this.generateEmptyTables(8);
-            }
-        },
-        saveToLocalStorage() {
-            localStorage.setItem('tablesData', JSON.stringify(this.tables));
-        },
         async fillOnce() {
             // Verificar si las mesas están vacías
             if (this.tables.length === 0) {
-                await this.generateEmptyTables(8);
+                await this.fill();
             }
         },
         async fill() {
@@ -38,23 +27,22 @@ export const useTableStore = defineStore("TableStore", {
             const config = { headers: headersData };
 
             try {
-                const response = await axios.get(host, {}, config);
+                const response = await axios.get(host, config);
                 const { action, data } = response.data;
 
                 if (action === 'CONTINUE') {
                     const tables = data.tables.map(table => ({
-                        table_id: table.table_id, // 1
-                        total_amount: table.total_amount, // 0
-                        type: table.type, // ''
-                        is_active: table.is_active, // false
+                        table_id: table.table_id,
+                        total_amount: table.total_amount,
+                        type: table.type,
+                        is_active: table.is_active === '1',
                         customers: table.customers.map(customer => ({
-                            customer_id: customer.customer_id, // 1
-                            amount: customer.amount, // 0
-                            products: customer.products, // []
+                            customer_id: customer.customer_id,
+                            amount: customer.amount,
+                            products: customer.products,
                         })),
                     }));
                     this.tables = tables;
-                    this.saveToLocalStorage(); // Guardar datos en localStorage
                 }
             } catch (error) {
                 const codeGeneric = 'UNKNOWN_ERROR';
@@ -73,19 +61,65 @@ export const useTableStore = defineStore("TableStore", {
                 }
             }
         },
-        async generateEmptyTables(numTables = 8) {
-            const emptyTables = [];
-            for (let i = 1; i <= numTables; i++) {
-                emptyTables.push({
-                    table_id: i,
-                    total_amount: 0,
-                    type: '',
-                    is_active: false,
-                    customers: [],
-                });
+        async updateTable(table_id) {
+            // Encuentra la tabla que se va a actualizar en el arreglo de tablas
+            const tableToUpdate = this.tables.find(table => table.table_id === table_id);
+
+            if (!tableToUpdate) {
+                // Si no se encuentra la tabla, no se puede actualizar
+                return;
             }
-            this.tables = emptyTables;
-            this.saveToLocalStorage(); // Guardar datos en localStorage
+
+            // Realiza la petición PUT para actualizar la tabla en la base de datos
+            const host = `${import.meta.env.VITE_APP_POS_SERVICE_HOST}${import.meta.env.VITE_APP_POS_API_EP_TABLES}`;
+
+            const headersData = {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer 12345`
+            };
+
+            const config = { headers: headersData };
+            let bodyLogin = {
+                table_id: table_id,
+                table_content: tableToUpdate
+            };
+
+            try {
+                const response = await axios.put(host, bodyLogin, config);
+                console.log(response.data); // Maneja la respuesta de la petición PUT como desees
+            } catch (error) {
+                console.error("Error updating table:", error);
+                // Maneja el error de la petición PUT según sea necesario
+            }
+        },
+        async addToCart(productId, tableId, customerId) {
+            // Encuentra la mesa en this.tables usando tableId
+            const tableToUpdate = this.tables.find(table => table.table_id === tableId);
+
+            // Verifica si se encontró la mesa
+            if (tableToUpdate) {
+                // Encuentra el cliente correspondiente por su id
+                const customerToUpdate = tableToUpdate.customers.find(customer => customer.customer_id == customerId);
+
+                // Verifica si se encontró el cliente
+                if (customerToUpdate) {
+                    // Agrega el producto al cliente encontrado
+                    const productToAdd = { product_id: productId };
+                    customerToUpdate.products.push(productToAdd);
+                } else {
+                    // Si no se encuentra el cliente, puedes manejar este caso según sea necesario
+                    console.error('Customer not found:', customerId);
+                }
+
+                // Actualiza la mesa en la base de datos
+                await this.updateTable(tableId);
+
+                // Log para verificar que se ha agregado el producto correctamente
+                console.log(`Producto ${productId} agregado a la mesa ${tableId}`);
+            } else {
+                // La mesa no fue encontrada, muestra un mensaje de error o maneja la situación según lo necesites
+                console.error(`Error: Mesa ${tableId} no encontrada`);
+            }
         },
         updateCustomersCount(table_id, customersCount) {
             const tableIndex = this.tables.findIndex(table => table.table_id === table_id);
@@ -94,20 +128,21 @@ export const useTableStore = defineStore("TableStore", {
                     this.tables[tableIndex].is_active = true;
                 }
                 const customers = Array.from({ length: customersCount }, (_, index) => ({
-                    customer_id: index + 1, // Incrementando desde 1
+                    customer_id: index + 1,
                     amount: 0,
                     products: []
                 }));
                 this.tables[tableIndex].customers = customers;
-                this.saveToLocalStorage(); // Guardar datos actualizados en localStorage
             }
         },
         cleanTable(table_id) {
             const tableIndex = this.tables.findIndex(table => table.table_id === table_id);
             if (tableIndex !== -1) {
                 this.tables[tableIndex].is_active = false;
+                this.tables[tableIndex].type = '';
+                this.tables[tableIndex].total_amount = '0';
                 this.tables[tableIndex].customers = [];
-                this.saveToLocalStorage(); // Guardar datos actualizados en localStorage
+                this.updateTable(table_id)
             }
         }
     }

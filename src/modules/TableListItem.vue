@@ -2,16 +2,17 @@
     <template v-for="item in tables" :key="item.table_id">
         <div class="table-list-item-container">
             <div class="card-table">
-                <div class="card-table-body" @click="goToProducts(item.table_id)">
+                <div class="card-table-body" @click="goToProducts(item.table_id, item.is_active)">
                     <h5 :class="`card-table-title ${item.is_active ? 'active' : ''}`">Mesa #{{ item.table_id }}</h5>
                     <div class="card-table-img">
                         <img :src="`../src/assets/images/icons/table-icon${item.is_active ? '-active' : ''}.svg`"
                             class="card-img-top" alt="table svg">
                     </div>
                     <p :class="`card-table-price ${item.is_active ? 'active' : ''}`">${{ item.total_amount }}</p>
-                    <p v-if="item.is_active" :class="`card-table-desc ${item.is_active ? 'active' : ''}`">{{ item.type }}
+                    <p v-if="item.is_active" :class="`card-table-desc ${item.is_active ? 'active' : ''}`">{{ item.type
+                        }}
                     </p>
-                    <div class="d-flex">
+                    <div v-if="item.is_active" class="d-flex">
                         <template v-for="customer in item.customers" :key="customer.customer_id">
                             <img :src="`../src/assets/images/icons/profile-icon-active.svg`" width="20px"
                                 alt="profile svg">
@@ -86,17 +87,22 @@ export default {
     },
     setup() {
         const tableStore = useTableStore();
+        // Functions tableStore
         const updateCustomersCount = tableStore.updateCustomersCount;
         const cleanTable = tableStore.cleanTable;
+        const updateTable = tableStore.updateTable;
 
         const productStore = useProductStore();
+        // Functions productStore
         const setClickedTable = productStore.setClickedTable;
 
         return {
-            tableStore,
+            // Functions tableStore
             updateCustomersCount,
             cleanTable,
-            productStore,
+            updateTable,
+
+            // Functions productStore
             setClickedTable
         };
     },
@@ -125,9 +131,9 @@ export default {
     },
     mounted() { },
     methods: {
-        setId(id, type) {
+        setId(table_id, type) {
             this.visible = true;
-            this.id_table = id;
+            this.id_table = table_id;
             this.typeModal = type;
         },
         setCustomers() {
@@ -139,6 +145,7 @@ export default {
                 this.cleanTable(this.id_table)
             }
             this.numberCustomer = 1;
+            this.updateTable(this.id_table)
         },
         doPayment() {
             console.log("doPayment", this.tables.table_id)
@@ -146,9 +153,13 @@ export default {
         getCustomerNumber(valor) {
             this.numberCustomer = valor; // Capturar el valor emitido por el hijo
         },
-        goToProducts(table_id) {
-            this.setClickedTable(table_id)
-            this.$router.push('/dashboard/products');
+        goToProducts(table_id, is_active) {
+            this.setClickedTable(table_id);
+            if (is_active) {
+                this.$router.push('/dashboard/products');
+            } else {
+                this.setId(table_id, 'customer');
+            }
         }
     }
 };

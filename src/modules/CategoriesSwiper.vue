@@ -1,11 +1,11 @@
 <template>
     <p>Categorías</p>
-    <swiper :modules="modules" :scrollbar="{ draggable: true }" @swiper="onSwiper" @slideChange="onSlideChange"
-        :loop="false" :grabCursor="true" :breakpoints="breakpoints" class="categories-swiper">
+    <swiper :modules="modules" :scrollbar="{ draggable: true }" :loop="false" :grabCursor="true"
+        :breakpoints="breakpoints" class="categories-swiper">
         <swiper-slide v-for="category in categories" :key="category">
-            <ButtonGeneral :classBtn="`btn-categories-swiper ${category.is_active ? 'active' : ''}`"
+            <ButtonGeneral :classBtn="`btn-categories-swiper ${category.isActive ? 'active' : ''}`"
                 :label="category.name" :type="'href'" @click="selectCategory(category.name)">
-                <img :src="`../src/assets/images/icons/${category.is_active ? category.imageActive : category.image}`"
+                <img :src="`../src/assets/images/icons/${category.isActive ? category.imageActive : category.image}`"
                     :alt="`icono ${category.name.toLowerCase()}`">
             </ButtonGeneral>
         </swiper-slide>
@@ -43,12 +43,6 @@ export default {
         SwiperSlide
     },
     setup() {
-        const onSwiper = (swiper) => {
-            console.debug(swiper);
-        };
-        const onSlideChange = () => {
-            console.debug('slide change');
-        };
         const productStore = useProductStore();
 
         // Define la función para seleccionar una categoría
@@ -56,8 +50,6 @@ export default {
             productStore.selectCategory(categoryName);
         };
         return {
-            onSwiper,
-            onSlideChange,
             modules: [Navigation, Pagination, Scrollbar, A11y],
             selectCategory
         };

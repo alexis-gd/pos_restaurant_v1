@@ -1,7 +1,7 @@
 <template>
     <div class="order-details-container">
         <div class="box-text-title">
-            <p class="text-title">Mesa #2</p>
+            <p class="text-title">Mesa #{{ clickedTable }}</p>
         </div>
         <div class="box-detail-content">
             <div class="box-text-subtitle">
@@ -55,12 +55,25 @@
 <script>
 import ButtonGeneral from '@/components/ButtonGeneral.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
+import { useProductStore } from '@/stores/productStore'
+import { storeToRefs } from "pinia"
 
 export default {
     name: 'OrderDetails',
     components: {
         ButtonGeneral,
         IconPlus
+    },
+    setup() {
+        const productStore = useProductStore();
+        // Variables productStore
+        const { clickedTable } = storeToRefs(productStore);
+        // Functions productStore
+        productStore.getClickedTableFromLocalStorage();
+        return {
+            // Variables productStore
+            clickedTable
+        }
     },
 }
 

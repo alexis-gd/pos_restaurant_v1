@@ -1,1 +1,1 @@
-ya esta el id de la mesa empezar a sacar la data
+Mejorar addToCart: agregar calculo de precio en addToCart

@@ -20,10 +20,12 @@ export default {
     },
     setup() {
         const tableStore = useTableStore();
+        // Variables tableStore
         const { tables } = storeToRefs(tableStore);
-        tableStore.initializeFromLocalStorage();
+        // Functions tableStore
+        tableStore.fillOnce();
         return {
-            tableStore,
+            // Variables tableStore
             tables
         }
     },

@@ -8,7 +8,6 @@
                 </template>
             </div>
             <div class="col-12 col-md-5 col-lg-4 col-xl-5">
-                {{ clickedTable }}
                 <OrderDetails></OrderDetails>
             </div>
         </div>
@@ -20,6 +19,7 @@ import CategoriesSwiper from '@/modules/CategoriesSwiper.vue'
 import OrderDetails from '@/modules/OrderDetails.vue'
 import ProductListItem from '@/modules/ProductListItem.vue'
 import { useProductStore } from '@/stores/productStore'
+import { useTableStore } from '@/stores/tableStore';
 import { storeToRefs } from "pinia"
 
 export default {
@@ -31,16 +31,22 @@ export default {
     },
     setup() {
         const productStore = useProductStore();
-        const { products, categories, activeCategory, getClickedTableFromLocalStorage, clickedTable } = storeToRefs(productStore);
+        // Variables productStore
+        const { categories, activeCategory } = storeToRefs(productStore);
+        // Functions productStore
         productStore.fillOnce();
         productStore.getClickedTableFromLocalStorage();
+        productStore.initializeClickedCustomer();
+        productStore.getClickedCustomerFromLocalStorage();
+
+        const tableStore = useTableStore();
+        // Functions tableStore
+        tableStore.fillOnce();
+
         return {
-            productStore,
-            products,
+            // Variables productStore
             categories,
             activeCategory,
-            getClickedTableFromLocalStorage,
-            clickedTable
         }
     },
     data() {

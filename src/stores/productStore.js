@@ -9,6 +9,7 @@ export const useProductStore = defineStore("ProductStore", {
             products: [],   // Array de productos
             activeCategory: null, // Variable para almacenar la categoría activa
             clickedTable: null, // Variable para almacenar la mesa a la que se le dio click
+            clickedCustomer: null, // Variable para almacenar el cliente al que se le dio click
         }
     },
 
@@ -48,7 +49,7 @@ export const useProductStore = defineStore("ProductStore", {
                         iconComponent: category.iconComponent,
                         image: category.image,
                         imageActive: category.imageActive,
-                        is_active: category.is_active,
+                        isActive: category.isActive,
                         products: category.products,
                     }));
                     this.categories = categories;
@@ -83,15 +84,15 @@ export const useProductStore = defineStore("ProductStore", {
             // Itera sobre las categorías para encontrar la categoría seleccionada
             this.categories.forEach(category => {
                 // Si el nombre de la categoría coincide, la marca como activa
-                category.is_active = category.name === categoryName;
+                category.isActive = category.name === categoryName;
             });
             // Actualiza la categoría activa en el estado
-            this.activeCategory = this.categories.find(category => category.is_active);
+            this.activeCategory = this.categories.find(category => category.isActive);
         },
         // Función para establecer la categoría activa la primera vez
         setInitialActiveCategory() {
             // Encontrar la primera categoría activa y establecerla como activa
-            const activeCategory = this.categories.find(category => category.is_active);
+            const activeCategory = this.categories.find(category => category.isActive);
             // Actualizar la categoría activa en el store
             this.activeCategory = activeCategory;
         },
@@ -101,11 +102,31 @@ export const useProductStore = defineStore("ProductStore", {
             // Guardar la mesa a la que se le dio click en localStorage
             localStorage.setItem('clickedTableId', JSON.stringify(this.clickedTable));
         },
-        // Función para recuperar la mesa a la que se le dio click del localStorage
+        // Función para recuperar el cliente al que se le dio click del localStorage
         getClickedTableFromLocalStorage() {
             const clickedTable = JSON.parse(localStorage.getItem('clickedTableId'));
             if (clickedTable) {
                 this.clickedTable = clickedTable;
+            }
+        },
+        initializeClickedCustomer() {
+            this.clickedCustomer = '1';
+            // Guardar el cliente al que se le dio click en localStorage
+            localStorage.setItem('clickedCustomerId', JSON.stringify(this.clickedCustomer));
+        },
+        // Función para establecer el cliente al que se le dio click
+        setClickedCustomer(customerId = null) {
+            if (customerId) {
+                this.clickedCustomer = customerId;
+                // Guardar el cliente al que se le dio click en localStorage
+                localStorage.setItem('clickedCustomerId', JSON.stringify(this.clickedCustomer));
+            }
+        },
+        // Función para recuperar el cliente al que se le dio click del localStorage
+        getClickedCustomerFromLocalStorage() {
+            const clickedCustomer = JSON.parse(localStorage.getItem('clickedCustomerId'));
+            if (clickedCustomer) {
+                this.clickedCustomer = clickedCustomer;
             }
         },
     },
