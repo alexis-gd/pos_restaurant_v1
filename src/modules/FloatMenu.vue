@@ -77,6 +77,7 @@ export default {
         background-color: $background-color;
         border-radius: $border-radius;
         justify-content: space-between;
+        min-width: 300px;
     }
 }
 </style>

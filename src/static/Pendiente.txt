@@ -1,1 +1,1 @@
-Mejorar addToCart: agregar calculo de precio en addToCart
+darle diseño a los items y mejorar el click del producto

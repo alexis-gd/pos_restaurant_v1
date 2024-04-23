@@ -55,7 +55,7 @@ export default {
     methods: {
         addToCart() {
             // Llama a la función addToCart del store de la mesa con los parámetros productId y tableId
-            this.storeAddToCart(this.item.id, this.clickedTable, this.clickedCustomer);
+            this.storeAddToCart(this.item, this.clickedTable, this.clickedCustomer);
         }
     }
 };

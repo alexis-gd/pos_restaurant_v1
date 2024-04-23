@@ -20,7 +20,7 @@ export const useTableStore = defineStore("TableStore", {
             const host = `${import.meta.env.VITE_APP_POS_SERVICE_HOST}${import.meta.env.VITE_APP_POS_API_EP_TABLES}`;
 
             const headersData = {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json; charset=UTF-8",
                 "Authorization": `Bearer 12345`
             };
 
@@ -39,10 +39,15 @@ export const useTableStore = defineStore("TableStore", {
                         customers: table.customers.map(customer => ({
                             customer_id: customer.customer_id,
                             amount: customer.amount,
-                            products: customer.products,
+                            products: customer.products.map(product => ({
+                                id: product.id,
+                                title: decodeURIComponent(product.title),
+                                price: product.price,
+                            })),
                         })),
                     }));
                     this.tables = tables;
+                    console.log(this.tables)
                 }
             } catch (error) {
                 const codeGeneric = 'UNKNOWN_ERROR';
@@ -70,6 +75,16 @@ export const useTableStore = defineStore("TableStore", {
                 return;
             }
 
+            // Haz una copia de la tabla para no modificar el original
+            const tableToUpdateCopy = JSON.parse(JSON.stringify(tableToUpdate));
+
+            // Aplica encodeURIComponent() al título de cada producto en la tabla copiada
+            tableToUpdateCopy.customers.forEach(customer => {
+                customer.products.forEach(product => {
+                    product.title = encodeURIComponent(product.title);
+                });
+            });
+
             // Realiza la petición PUT para actualizar la tabla en la base de datos
             const host = `${import.meta.env.VITE_APP_POS_SERVICE_HOST}${import.meta.env.VITE_APP_POS_API_EP_TABLES}`;
 
@@ -81,7 +96,7 @@ export const useTableStore = defineStore("TableStore", {
             const config = { headers: headersData };
             let bodyLogin = {
                 table_id: table_id,
-                table_content: tableToUpdate
+                table_content: tableToUpdateCopy
             };
 
             try {
@@ -92,19 +107,24 @@ export const useTableStore = defineStore("TableStore", {
                 // Maneja el error de la petición PUT según sea necesario
             }
         },
-        async addToCart(productId, tableId, customerId) {
+        async addToCart(productItem, tableId, customerId) {
             // Encuentra la mesa en this.tables usando tableId
             const tableToUpdate = this.tables.find(table => table.table_id === tableId);
 
             // Verifica si se encontró la mesa
             if (tableToUpdate) {
                 // Encuentra el cliente correspondiente por su id
-                const customerToUpdate = tableToUpdate.customers.find(customer => customer.customer_id == customerId);
+                const customerToUpdate = tableToUpdate.customers.find(customer => customer.customer_id === customerId);
 
                 // Verifica si se encontró el cliente
                 if (customerToUpdate) {
                     // Agrega el producto al cliente encontrado
-                    const productToAdd = { product_id: productId };
+                    const productToAdd = {
+                        id: productItem.id,
+                        title: productItem.title,
+                        price: productItem.price
+                    };
+                    console.log(productToAdd)
                     customerToUpdate.products.push(productToAdd);
                 } else {
                     // Si no se encuentra el cliente, puedes manejar este caso según sea necesario
@@ -115,7 +135,7 @@ export const useTableStore = defineStore("TableStore", {
                 await this.updateTable(tableId);
 
                 // Log para verificar que se ha agregado el producto correctamente
-                console.log(`Producto ${productId} agregado a la mesa ${tableId}`);
+                console.log(`Producto ${productItem} agregado a la mesa ${tableId}`);
             } else {
                 // La mesa no fue encontrada, muestra un mensaje de error o maneja la situación según lo necesites
                 console.error(`Error: Mesa ${tableId} no encontrada`);
@@ -128,7 +148,7 @@ export const useTableStore = defineStore("TableStore", {
                     this.tables[tableIndex].is_active = true;
                 }
                 const customers = Array.from({ length: customersCount }, (_, index) => ({
-                    customer_id: index + 1,
+                    customer_id: (index + 1).toString(),
                     amount: 0,
                     products: []
                 }));

@@ -2,12 +2,12 @@
     <div class="product-list-container">
         <CategoriesSwiper :categories="categories"></CategoriesSwiper>
         <div class="row">
-            <div class="col-12 col-md-7 col-lg-8 col-xl-7 box-products">
+            <div class="col-12 col-md-7 col-lg-8 col-xl-8 box-products">
                 <template v-for="item in activeCategoryProducts" :key="item.id">
                     <ProductListItem :item="item"></ProductListItem>
                 </template>
             </div>
-            <div class="col-12 col-md-5 col-lg-4 col-xl-5">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-4">
                 <OrderDetails></OrderDetails>
             </div>
         </div>

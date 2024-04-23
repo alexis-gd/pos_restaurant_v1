@@ -55,6 +55,10 @@ export default {
             font-size: 10px;
             gap: 0px;
         }
+
+        &:not(.active):hover {
+            background-color: $button-secondary-color;
+        }
     }
 
     &.btn-categories-swiper {
@@ -65,6 +69,10 @@ export default {
         @media screen and (max-width: 767px) {
             flex-direction: row;
             justify-content: center;
+        }
+
+        &:not(.active):hover {
+            background-color: $button-secondary-color;
         }
     }
 
@@ -77,6 +85,12 @@ export default {
         height: 45px;
         gap: 0px;
         justify-content: center;
+
+        &:not(.active):hover {
+            background-color: $button-secondary-color;
+        }
+
+
     }
 
     &.btn-order-details {
@@ -87,6 +101,19 @@ export default {
         height: 45px;
         border-radius: 5px;
         padding: 0px;
+        background-color: $button-disabled-color;
+        color: $font-color-disable;
+        border-color: $button-disabled-color;
+
+        &:not(.active):hover {
+            background-color: $button-disabled-color-hover;
+        }
+
+        &:active {
+            background-color: $button-disabled-color;
+            color: $font-color-disable;
+            border-color: $button-disabled-color;
+        }
     }
 
     &.btn-table {
@@ -108,6 +135,10 @@ export default {
         &:last-child {
             border-bottom-right-radius: $border-radius;
         }
+
+        &:not(.active):hover {
+            background-color: $button-disabled-color-hover;
+        }
     }
 
     &.btn-modal {
@@ -120,8 +151,7 @@ export default {
         height: 45px;
 
         &:not(.active):hover {
-            opacity: .8;
-            background-color: $button-disabled-color;
+            background-color: $button-disabled-color-hover;
         }
     }
 
@@ -139,10 +169,6 @@ export default {
         &:hover {
             background-color: $button-primary-color-hover;
         }
-    }
-
-    &:not(.active):hover {
-        background-color: $button-secondary-color;
     }
 
     &:active {

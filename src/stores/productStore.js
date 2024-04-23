@@ -110,9 +110,12 @@ export const useProductStore = defineStore("ProductStore", {
             }
         },
         initializeClickedCustomer() {
-            this.clickedCustomer = '1';
-            // Guardar el cliente al que se le dio click en localStorage
-            localStorage.setItem('clickedCustomerId', JSON.stringify(this.clickedCustomer));
+            this.getClickedCustomerFromLocalStorage();
+            if (!this.clickedCustomer) {
+                this.clickedCustomer = '1';
+                // Guardar el cliente al que se le dio click en localStorage
+                localStorage.setItem('clickedCustomerId', JSON.stringify(this.clickedCustomer));
+            }
         },
         // Función para establecer el cliente al que se le dio click
         setClickedCustomer(customerId = null) {
