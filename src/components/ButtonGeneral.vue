@@ -93,6 +93,25 @@ export default {
 
     }
 
+    &.btn-product-delete {
+        width: 50px;
+        height: 45px;
+        gap: 0px;
+        background-color: $button-danger-color;
+        border-color: $button-danger-color;
+        border-radius: 0 $border-radius $border-radius 0;
+        flex-direction: row;
+        justify-content: center;
+
+        &:not(.active):hover {
+            background-color: $button-danger-color-hover;
+        }
+
+        &:active {
+            border-color: $button-danger-color-hover;
+        }
+    }
+
     &.btn-order-details {
         font-size: 10px;
         flex-direction: column;

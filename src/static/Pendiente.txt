@@ -1,1 +1,1 @@
-darle diseño a los items y mejorar el click del producto
+bug al modificar numero de clientes

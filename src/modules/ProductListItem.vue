@@ -93,6 +93,7 @@ export default {
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                line-height: 22px;
             }
 
             .card-product-desc {

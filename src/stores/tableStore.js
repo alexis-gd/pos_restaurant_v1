@@ -43,6 +43,7 @@ export const useTableStore = defineStore("TableStore", {
                                 id: product.id,
                                 title: decodeURIComponent(product.title),
                                 price: product.price,
+                                product_id: product.product_id
                             })),
                         })),
                     }));
@@ -66,7 +67,7 @@ export const useTableStore = defineStore("TableStore", {
                 }
             }
         },
-        async updateTable(table_id) {
+        async updateTableDb(table_id) {
             // Encuentra la tabla que se va a actualizar en el arreglo de tablas
             const tableToUpdate = this.tables.find(table => table.table_id === table_id);
 
@@ -121,7 +122,7 @@ export const useTableStore = defineStore("TableStore", {
                     const product_id = customerToUpdate.products.length + 1;
                     // Agrega el producto al cliente encontrado
                     const productToAdd = {
-                        id: product_id,
+                        id: (product_id).toString(),
                         title: productItem.title,
                         price: productItem.price,
                         product_id: productItem.id
@@ -134,7 +135,7 @@ export const useTableStore = defineStore("TableStore", {
                 }
 
                 // Actualiza la mesa en la base de datos
-                await this.updateTable(tableId);
+                await this.updateTableDb(tableId);
 
                 // Log para verificar que se ha agregado el producto correctamente
                 console.log(`Producto ${productItem} agregado a la mesa ${tableId}`);
@@ -142,6 +143,30 @@ export const useTableStore = defineStore("TableStore", {
                 // La mesa no fue encontrada, muestra un mensaje de error o maneja la situación según lo necesites
                 console.error(`Error: Mesa ${tableId} no encontrada`);
             }
+        },
+        async deleteFromCart(productId, tableId, customerId) {
+            // Encuentra la mesa en this.tables usando tableId
+            const tableToUpdate = this.tables.find(table => table.table_id === tableId);
+            // Verifica si se encontró la mesa
+            if (tableToUpdate) {
+                // Encuentra el cliente correspondiente por su id
+                const customerToUpdate = tableToUpdate.customers.find(customer => customer.customer_id === customerId);
+                // Verifica si se encontró el cliente
+                if (customerToUpdate) {
+                    // Encuentra el cliente correspondiente por su id
+                    const productIndex = customerToUpdate.products.findIndex(product => product.id === productId);
+                    // Verifica si se encontró el producto por su id
+                    if (productIndex !== -1) {
+                        // El producto fue encontrado, ahora lo eliminamos
+                        customerToUpdate.products.splice(productIndex, 1);
+                    } else {
+                        // El producto no fue encontrado
+                        console.error(`No se encontró un producto con ID ${productId}.`);
+                    }
+                }
+            }
+            // Actualiza la mesa en la base de datos
+            await this.updateTableDb(tableId);
         },
         updateCustomersCount(table_id, customersCount) {
             const tableIndex = this.tables.findIndex(table => table.table_id === table_id);
@@ -164,7 +189,7 @@ export const useTableStore = defineStore("TableStore", {
                 this.tables[tableIndex].type = '';
                 this.tables[tableIndex].total_amount = '0';
                 this.tables[tableIndex].customers = [];
-                this.updateTable(table_id)
+                this.updateTableDb(table_id)
             }
         }
     }

@@ -90,7 +90,7 @@ export default {
         // Functions tableStore
         const updateCustomersCount = tableStore.updateCustomersCount;
         const cleanTable = tableStore.cleanTable;
-        const updateTable = tableStore.updateTable;
+        const updateTableDb = tableStore.updateTableDb;
 
         const productStore = useProductStore();
         // Functions productStore
@@ -100,7 +100,7 @@ export default {
             // Functions tableStore
             updateCustomersCount,
             cleanTable,
-            updateTable,
+            updateTableDb,
 
             // Functions productStore
             setClickedTable
@@ -145,7 +145,7 @@ export default {
                 this.cleanTable(this.id_table)
             }
             this.numberCustomer = 1;
-            this.updateTable(this.id_table)
+            this.updateTableDb(this.id_table)
         },
         doPayment() {
             console.log("doPayment", this.tables.table_id)

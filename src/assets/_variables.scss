@@ -1,7 +1,8 @@
 /* General */
-$border-radius:10px;
-$surface-card:#ffffff;
-$card-border:1px solid #e2e8f0;
+$border-radius: 10px;
+$border-color: #DDD9D8;
+$surface-card: #ffffff;
+$card-border: 1px solid #e2e8f0;
 $font-color-default: #252525;
 $font-color-placeholder: #ccc;
 
@@ -30,6 +31,8 @@ $button-secondary-color: #EDEDED; // Color background de botones secundarios
 // $button-check-radio-disable-border-color: #004951; // Color de borde de checkbox o radio buttons deshabilitados
 $button-disabled-color: #767676; // Color background de botones deshabilitados
 $button-disabled-color-hover: #5a5a5a; // Color background de botones deshabilitados
+$button-danger-color: #FF3B30;
+$button-danger-color-hover: #db160b;
 
 // Fuentes
 $font-color-base: #2B2B2B; // Color principal de fuente

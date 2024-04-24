@@ -36,9 +36,28 @@
                                     <p class="text-subtitle">Persona #{{ customer.customer_id }}</p>
                                     <template v-for="product in customer.products" :key="product.id">
                                         <div class="col-12">
-                                            <div class="d-flex justify-content-between">
-                                                <span>{{ product.title }}</span>
-                                                <span>{{ product.price }}</span>
+                                            <div class="cart-product-item">
+                                                <div class="row align-items-center">
+                                                    <div class="col-6">
+                                                        <div class="ms-3">
+                                                            <p class="title">{{ product.title }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <p>x1</p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p>${{ product.price }}</p>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="d-flex justify-content-end">
+                                                            <ButtonGeneral :classBtn="`btn-product-delete`"
+                                                                @click="deleteItem(product.id)">
+                                                                <IconDelete :class="'active'" />
+                                                            </ButtonGeneral>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </template>
@@ -46,12 +65,6 @@
                             </template>
                         </template>
                     </div>
-                </div>
-                <div>
-                    <div>chilaquiles x2 $ 152.00</div>
-                    <div>chilaquiles x2 $ 152.00</div>
-                    <div>chilaquiles x2 $ 152.00</div>
-                    <div>chilaquiles x2 $ 152.00</div>
                 </div>
 
                 <div>
@@ -65,6 +78,7 @@
 
 <script>
 import ButtonGeneral from '@/components/ButtonGeneral.vue';
+import IconDelete from '@/components/icons/IconDelete.vue';
 import IconProfile from '@/components/icons/IconProfile.vue';
 import { useProductStore } from '@/stores/productStore';
 import { useTableStore } from '@/stores/tableStore';
@@ -74,6 +88,7 @@ export default {
     name: 'OrderDetails',
     components: {
         ButtonGeneral,
+        IconDelete,
         IconProfile
     },
     setup() {
@@ -84,17 +99,24 @@ export default {
 
         const tableStore = useTableStore();
         const { tables } = storeToRefs(tableStore);
+        const deleteFromCart = tableStore.deleteFromCart;
 
         return {
             clickedTable,
             clickedCustomer,
             setClickedCustomer,
-            tables
+            tables,
+            deleteFromCart
         }
     },
     methods: {
         setCustomer(customer_id) {
             this.setClickedCustomer(customer_id);
+        },
+        deleteItem(productId) {
+            console.log(this.tables)
+            // Llama a la función deleteFromCart del store de la mesa con los parámetros productId, tableId y customerId
+            this.deleteFromCart(productId, this.clickedTable, this.clickedCustomer);
         }
     }
 }
@@ -110,7 +132,7 @@ export default {
     min-width: 300px;
 
     .box-details-container {
-        max-width: 350px;
+        max-width: 380px;
         width: 100%;
     }
 
@@ -126,7 +148,7 @@ export default {
 
     .text-title {
         font-size: 20px;
-        font-weight: 700;
+        font-weight: 500;
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
@@ -156,6 +178,26 @@ export default {
 
     .box-btn-customer {
         padding-block: 10px;
+    }
+
+    .cart-product-item {
+        border: 1px solid $border-color;
+        border-right: 0px;
+        border-radius: $border-radius;
+
+        .title {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        p {
+            font-weight: 500;
+            margin-bottom: 0px;
+            line-height: 18px;
+            font-size: 15px;
+        }
     }
 }
 </style>
