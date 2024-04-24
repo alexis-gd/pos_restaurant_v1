@@ -118,11 +118,13 @@ export const useTableStore = defineStore("TableStore", {
 
                 // Verifica si se encontró el cliente
                 if (customerToUpdate) {
+                    const product_id = customerToUpdate.products.length + 1;
                     // Agrega el producto al cliente encontrado
                     const productToAdd = {
-                        id: productItem.id,
+                        id: product_id,
                         title: productItem.title,
-                        price: productItem.price
+                        price: productItem.price,
+                        product_id: productItem.id
                     };
                     console.log(productToAdd)
                     customerToUpdate.products.push(productToAdd);
